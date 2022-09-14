@@ -1,21 +1,14 @@
-resource "azurerm_resource_group" "resource_grp" {
-  name     = var.resource_name
-  location = var.location
-}
-
-
 resource "azurerm_management_lock" "rglock" {
-  name       = "resource-group-level"
-  scope      = azurerm_resource_group.resource_grp.id
-  lock_level = "ReadOnly"
-  notes      = "This Resource Group is Read-Only"
+  name       = var.rglock_name
+  scope      = var.resource_name
+  lock_level = var.lock_level
 }
 
 
 resource "azurerm_public_ip" "public_ip" {
   name                = var.public_ip_name
-  resource_group_name = azurerm_resource_group.resource_grp.name
-  location            = azurerm_resource_group.resource_grp.location
+  resource_group_name = var.resource_name
+  location            = var.location
   ip_version          = var.ip_version
   sku                 = var.public_ip_sku
   sku_tier            = var.public_ip_sku_tier
@@ -25,7 +18,7 @@ resource "azurerm_public_ip" "public_ip" {
 resource "azurerm_lb" "loadbalancer" {
 
   name                = var.name
-  resource_group_name = azurerm_resource_group.resource_grp.id
+  resource_group_name = var.resource_name
   location            = var.location
   sku                 = var.sku
   sku_tier            = var.sku_tier
@@ -36,7 +29,7 @@ resource "azurerm_lb" "loadbalancer" {
 
 }
 
-resource "azurerm_lb_backend_address_pool" "example" {
+resource "azurerm_lb_backend_address_pool" "backend_address_pool" {
   name            = var.backend_name
   loadbalancer_id = azurerm_lb.loadbalancer.id
 }
@@ -45,7 +38,7 @@ resource "azurerm_lb_rule" "lb_rule" {
   name                           = var.rule_name
   loadbalancer_id                = azurerm_lb.loadbalancer.id
   frontend_ip_configuration_name = var.ip_name
-  backend_address_pool_ids       = azurerm_lb_backend_address_pool.example.id
+  backend_address_pool_ids       = azurerm_lb_backend_address_pool.backend_address_pool.id
   protocol                       = var.protocol
   frontend_port                  = var.frontend_port
   backend_port                   = var.backend_port
