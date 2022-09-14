@@ -21,6 +21,8 @@ jobs:
           terraform_version: '1.1.2'
       - name: terraform init
         run: terraform init --input=false
+      - name: terraform fmt
+        run: terraform fmt
       - name: terraform format
         run: terraform fmt -check
       - name: terraform validate
