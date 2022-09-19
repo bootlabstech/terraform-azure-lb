@@ -1,10 +1,10 @@
 variable "rglock_name" {
-  type  = string
-  description =  "Specifies the name of the Management Lock"
+  type        = string
+  description = "Specifies the name of the Management Lock"
 }
 variable "lock_level" {
-  type  = string
-  description =  "Specifies the Level to be used for this Lock"
+  type        = string
+  description = "Specifies the Level to be used for this Lock"
 }
 //resource_group
 variable "resource_name" {

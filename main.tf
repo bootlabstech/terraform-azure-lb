@@ -1,10 +1,3 @@
-resource "azurerm_management_lock" "rglock" {
-  name       = var.rglock_name
-  scope      = var.resource_name
-  lock_level = var.lock_level
-}
-
-
 resource "azurerm_public_ip" "public_ip" {
   name                = var.public_ip_name
   resource_group_name = var.resource_name
