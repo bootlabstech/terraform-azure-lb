@@ -24,7 +24,7 @@ resource "azurerm_lb" "loadbalancer" {
 
 resource "azurerm_lb_backend_address_pool" "backend_address_pool" {
   name            = var.backend_name
-  loadbalancer_id = azurerm_lb.loadbalancer.id
+  loadbalancer_id = [azurerm_lb.loadbalancer.id]
 }
 
 resource "azurerm_lb_rule" "lb_rule" {
