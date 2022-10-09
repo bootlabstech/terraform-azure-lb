@@ -24,14 +24,14 @@ resource "azurerm_lb" "loadbalancer" {
 
 resource "azurerm_lb_backend_address_pool" "backend_address_pool" {
   name            = var.backend_name
-  loadbalancer_id = [azurerm_lb.loadbalancer.id]
+  loadbalancer_id = azurerm_lb.loadbalancer.id
 }
 
 resource "azurerm_lb_rule" "lb_rule" {
   name                           = var.rule_name
   loadbalancer_id                = azurerm_lb.loadbalancer.id
   frontend_ip_configuration_name = var.ip_name
-  backend_address_pool_ids       = azurerm_lb_backend_address_pool.backend_address_pool.id
+  backend_address_pool_ids       = [azurerm_lb_backend_address_pool.backend_address_pool.id]
   protocol                       = var.protocol
   frontend_port                  = var.frontend_port
   backend_port                   = var.backend_port
