@@ -7,7 +7,7 @@ variable "lock_level" {
   description = "Specifies the Level to be used for this Lock"
 }
 //resource_group
-variable "resource_name" {
+variable "resource_group_name" {
   description = "The name of the Resource Group in which to create the Load Balancer."
   type        = string
 }
@@ -18,31 +18,31 @@ variable "location" {
 }
 
 //public_ip
-variable "public_ip_name" {
-  description = " Specifies the name of the Public IP."
-  type        = string
-}
+# variable "public_ip_name" {
+#   description = " Specifies the name of the Public IP."
+#   type        = string
+# }
 
-variable "ip_version" {
-  description = "The IP Version to use, IPv6 or IPv4."
-  type        = string
-}
+# variable "ip_version" {
+#   description = "The IP Version to use, IPv6 or IPv4."
+#   type        = string
+# }
 
-variable "public_ip_sku" {
-  description = "The SKU of the Public IP."
-  type        = string
-}
+# variable "public_ip_sku" {
+#   description = "The SKU of the Public IP."
+#   type        = string
+# }
 
-variable "public_ip_sku_tier" {
-  description = "The SKU Tier that should be used for the Public IP."
-  type        = string
+# variable "public_ip_sku_tier" {
+#   description = "The SKU Tier that should be used for the Public IP."
+#   type        = string
 
-}
+# }
 
-variable "allocation_method" {
-  description = "Defines the allocation method for this IP address. "
-  type        = string
-}
+# variable "allocation_method" {
+#   description = "Defines the allocation method for this IP address. "
+#   type        = string
+# }
 
 //load_balancer 
 variable "name" {
@@ -109,3 +109,25 @@ variable "enable_floating_ip" {
   description = "Are the Floating IPs enabled for this Load Balncer Rule? "
   type        = bool
 }
+
+variable "nic_name" {
+  type        = string
+  description = "name of the azurerm_network_interface"
+}
+
+
+variable "ip_configuration_name" {
+  type        = string
+  description = "A name used for this IP Configuration."
+}
+
+variable "private_ip_address_allocation" {
+  type        = string
+  description = "The allocation method used for the Private IP Address. Possible values are Dynamic and Static."
+}
+
+variable "subnet_name" {
+  type        = string
+  description = "The name of subnet"
+}
+

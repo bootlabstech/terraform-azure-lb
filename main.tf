@@ -1,23 +1,40 @@
-resource "azurerm_public_ip" "public_ip" {
-  name                = var.public_ip_name
-  resource_group_name = var.resource_name
+# resource "azurerm_public_ip" "public_ip" {
+#   name                = var.public_ip_name
+#   resource_group_name = var.resource_name
+#   location            = var.location
+#   ip_version          = var.ip_version
+#   sku                 = var.public_ip_sku
+#   sku_tier            = var.public_ip_sku_tier
+#   allocation_method   = var.allocation_method
+# }
+
+resource "azurerm_network_interface" "nic" {
+  name                = var.nic_name
   location            = var.location
-  ip_version          = var.ip_version
-  sku                 = var.public_ip_sku
-  sku_tier            = var.public_ip_sku_tier
-  allocation_method   = var.allocation_method
+  resource_group_name = var.resource_group_name
+
+  ip_configuration {
+    name                          = var.ip_configuration_name
+    subnet_id                     = var.subnet_name
+    private_ip_address_allocation = var.private_ip_address_allocation
+
+  }
+
 }
 
 resource "azurerm_lb" "loadbalancer" {
 
   name                = var.name
-  resource_group_name = var.resource_name
+  resource_group_name = var.resource_group_name
   location            = var.location
   sku                 = var.sku
   sku_tier            = var.sku_tier
   frontend_ip_configuration {
     name                 = var.ip_name
-    public_ip_address_id = azurerm_public_ip.public_ip.id
+    private_ip_address =  azurerm_network_interface.nic.private_ip_address
+    subnet_id = var.subnet_name
+    # public_ip_address_id = azurerm_public_ip.public_ip.id
+
   }
 
 }
@@ -40,3 +57,7 @@ resource "azurerm_lb_rule" "lb_rule" {
   enable_floating_ip             = var.enable_floating_ip
 
 }
+
+
+
+
